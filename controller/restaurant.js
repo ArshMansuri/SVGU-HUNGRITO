@@ -2,8 +2,7 @@ const Restaurant = require("../model/Restaurant");
 const { sendMail } = require("../utils/sendMail");
 const { sendOtp } = require("../utils/sendOtp");
 const cloudinary = require("cloudinary");
-const ResType = require("../model/Restype");
-const Category = require("../model/Categories");
+const ResType = require("../model/ResType");
 const Order = require("../model/Order");
 const DelBoy = require("../model/DelBoy");
 const {
