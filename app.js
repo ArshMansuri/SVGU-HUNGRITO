@@ -79,6 +79,7 @@ app.get('/', (req,res)=>{
 
 //     } catch (error) {
 //         console.log(error)
+//         console.log(error)
 //     }
 // }
 // createAdmin()
