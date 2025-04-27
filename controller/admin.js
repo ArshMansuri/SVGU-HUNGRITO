@@ -893,14 +893,17 @@ exports.adminSendNotificationToUser = async (req, res) => {
         if (body.includes("<<username>>")) {
           tempBody = body.replace("<<username>>", users[i]?.username);
         }
-
-        await firebase.messaging().send({
-          token: users[i].notiToken,
-          notification: {
-            title: tempTital,
-            body: tempBody,
-          },
-        });
+        console.log("call==>", users[i].notiToken)
+        if(users[i].notiToken){
+          console.log(users[i].notiToken)
+          await firebase.messaging().send({
+            token: users[i].notiToken,
+            notification: {
+              title: tempTital,
+              body: tempBody,
+            },
+          });
+        }
       }
     }
 
