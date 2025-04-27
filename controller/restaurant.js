@@ -904,6 +904,59 @@ exports.getResOrderList = async (req, res) => {
   }
 };
 
+exports.resErningDetail = async (req, res) => {
+  try {
+
+    const erningDetail = await Order.find({"orders.restu.resId": req.restu._id});
+    var earningsByDate = {}
+    let totalErning = 0
+
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth(); 
+    const currentYear = currentDate.getFullYear();
+
+    erningDetail.forEach((order) => {
+      const orderDate = new Date(order.creatdAt);
+      // console.log(order.creatdAt)
+    
+      const orderMonth = orderDate.getMonth();
+      const orderYear = orderDate.getFullYear();
+    
+      // Only process if month and year match
+      if (orderMonth === currentMonth && orderYear === currentYear) {
+        const date = orderDate.toISOString().split('T')[0]; 
+    
+        order.orders.restu.forEach((restuItem) => {
+          // console.log(restuItem)
+            if (restuItem.resId.toString() == req.restu._id.toString()) {
+              if (!earningsByDate[date]) {
+                earningsByDate[date] = 0;
+              }
+              // console.log("Res Total===>", restuItem.resSubTotal)
+              earningsByDate[date] += restuItem.resSubTotal;
+              totalErning += restuItem.resSubTotal;
+            }
+        });
+      }
+    });
+
+    // console.log(earningsByDate)
+
+    return res.status(200).json({
+      success: true,
+      earningsByDate,
+      totalErning
+    })
+
+  } catch (error) {
+    console.log("Catch Error:: ", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
 exports.resDashCharts = async (req, res) => {
   try {
     let topFourCart = {};

@@ -1,5 +1,5 @@
 const express = require('express')
-const { resFirstSignUp, resEmailVerify, resPrimarySignUp, resPhoneMakeOtp, resPhoneVerify, resOwnerPhoneMakeOtp, resOwnerPhoneVerify, resSecondaySignUp, resLastSignUp, resLogin, loadRes, getResType, getCategories, getResNewOrder, resAcceptOrder, resDashCharts, resCancelOrder, getResOrderList, resLogout, resForgotPasswordToken, resResetPassLinkVerify, resResetPassByLink } = require('../controller/restaurant')
+const { resFirstSignUp, resEmailVerify, resPrimarySignUp, resPhoneMakeOtp, resPhoneVerify, resOwnerPhoneMakeOtp, resOwnerPhoneVerify, resSecondaySignUp, resLastSignUp, resLogin, loadRes, getResType, getCategories, getResNewOrder, resAcceptOrder, resDashCharts, resCancelOrder, getResOrderList, resLogout, resForgotPasswordToken, resResetPassLinkVerify, resResetPassByLink, resErningDetail } = require('../controller/restaurant')
 const { isRestuAuth } = require('../middleware/userAuth')
 const router = express.Router()
 
@@ -31,6 +31,8 @@ router.route('/restaurant/order/list').get(isRestuAuth, getResOrderList)
 router.route('/restaurant/neworders').get(isRestuAuth, getResNewOrder)
 router.route('/restaurant/accept/:ordId').get(isRestuAuth, resAcceptOrder)
 router.route('/restaurant/reject/:ordId').delete(isRestuAuth, resCancelOrder)
+
+router.route('/restaurant/erning/detail').get(isRestuAuth, resErningDetail)
 
 router.route('/restaurant/deshboard/charts').get(isRestuAuth, resDashCharts)
 

@@ -6,7 +6,8 @@ const { calculatePercentage, picChartPercentage } = require("../utils/helper/hel
 const Order = require("../model/Order");
 const User = require("../model/User");
 const Filter = require("../model/Filter");
-const { firebase } = require("../firebase/index")
+const { firebase } = require("../firebase/index");
+const Categories = require("../model/Categories");
 
 exports.adminLogin = async (req, res) => {
   try {
@@ -1197,3 +1198,31 @@ exports.adminDashCharts = async (req, res) => {
     });
   }
 };
+
+
+exports.addCategories = async (req, res) =>{
+  try {
+    const {category} = req.body;
+    if(!category){
+      return res.status(400).json({
+        success: false,
+        message: "Enter All Category",
+      });
+    }
+
+    const cat = await Categories.create({type:category});
+
+    return res.status(201).json({
+      success: true,
+      cat,
+      message: "Category Created Successfully"
+    })
+
+  } catch (error) {
+    console.log("Catch Error:: ", error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
